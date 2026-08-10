@@ -35,15 +35,7 @@
     onActivation.autoUpdate = true;
     onActivation.extraFlags = [ "--force" ];
     brews = [
-      "bat"
-      "docker"
-      "docker-compose"
-      "eza"
-      "fzf"
-      "gh"
       "herdr"
-      "pnpm"
-      "zoxide"
     ];
     casks = [
       "alt-tab"
