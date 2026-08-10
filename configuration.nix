@@ -35,19 +35,23 @@
     onActivation.autoUpdate = true;
     onActivation.extraFlags = [ "--force" ];
     brews = [
-      "herdr"
-    ];
-    casks = [
-      "wezterm"
-      "claude-code"
       "bat"
-      "fzf"
-      "eza"
-      "gh"
-      "pnpm"
-      "zoxide"
       "docker"
       "docker-compose"
+      "eza"
+      "fzf"
+      "gh"
+      "herdr"
+      "pnpm"
+      "zoxide"
+    ];
+    casks = [
+      "alt-tab"
+      "claude-code"
+      "hiddenbar"
+      "maccy"
+      "rectangle"
+      "wezterm"
     ];
   };
 }
