@@ -1,0 +1,22 @@
+# Nix build results
+result
+result-*
+
+# herdr runtime/local state (not config)
+home/.config/herdr/session.json
+home/.config/herdr/.plugins.lock
+home/.config/herdr/*.log
+home/.config/herdr/*.sock
+
+# OS cruft
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Editor/tooling cruft
+*.swp
+*.swo
+*~
+.direnv/
