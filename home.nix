@@ -61,6 +61,8 @@ in
     nis = "npm i -S";
 
     vim = "nvim";
+
+    doup = "brew update && brew upgrade && brew autoremove && brew cleanup";
   };
 
   # Zoxide integration. enableZshIntegration is off on purpose: home-manager
