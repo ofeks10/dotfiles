@@ -141,24 +141,42 @@ in
     '';
   };
   # Edit-in-place: the real file stays in my repo, ~/.config just points at it.
-  home.file.".config/wezterm".source =
-    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/wezterm";
-  home.file.".config/nvim".source =
-    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/nvim";
-  home.file.".config/herdr".source =
-    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/herdr";
-  home.file.".claude/settings.json".source =
-    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.claude/settings.json";
+  home.file.".config/wezterm" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/wezterm";
+    force = true;
+  };
+  home.file.".config/nvim" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/nvim";
+    force = true;
+  };
+  home.file.".config/herdr" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/herdr";
+    force = true;
+  };
+  home.file.".claude/settings.json" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.claude/settings.json";
+    force = true;
+  };
 
-  home.file.".gitconfig".source =
-    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.gitconfig";
-  home.file.".p10k.zsh".source =
-    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.p10k.zsh";
-  home.file.".fzf.zsh".source =
-    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.fzf.zsh";
+  home.file.".gitconfig" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.gitconfig";
+    force = true;
+  };
+  home.file.".p10k.zsh" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.p10k.zsh";
+    force = true;
+  };
+  home.file.".fzf.zsh" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.fzf.zsh";
+    force = true;
+  };
 
-  home.file.".claude/CLAUDE.md".source =
-    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/AGENTS.md";
-  home.file.".codex/AGENTS.md".source =
-    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/AGENTS.md";
+  home.file.".claude/CLAUDE.md" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/AGENTS.md";
+    force = true;
+  };
+  home.file.".codex/AGENTS.md" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/AGENTS.md";
+    force = true;
+  };
 }
