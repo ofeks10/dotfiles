@@ -25,6 +25,7 @@
     finder.CreateDesktop = false;          # clean desktop
     trackpad.Clicking = true;              # tap to click
   };
+  nix-homebrew.autoMigrate = true;
   nix-homebrew = {
     enable = true;
     inherit user;
