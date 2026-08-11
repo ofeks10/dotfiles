@@ -38,6 +38,7 @@
       "herdr"
     ];
     casks = [
+      "raycast"
       "alt-tab"
       "claude-code"
       "hiddenbar"

@@ -38,12 +38,12 @@ in
   # Shell aliases (works across shells managed by Home Manager)
   home.shellAliases = {
     # File listing & navigation
-    ls = "eza --color=auto";
-    ll = "eza -alF";
+    ls = "eza --color=auto ";
+    ll = "eza -alF ";
     la = "eza -A";
     l = "eza -CF";
     ".." = "cd ..";
-    cat = "bat";
+    cat = "bat ";
 
     # Shortcuts
     a = "code .";
@@ -56,6 +56,8 @@ in
     nr = "npm run";
     run = "npm run";
     nis = "npm i -S";
+
+    vim = "nvim";
   };
 
   # Zoxide integration (replaces your manual eval)
