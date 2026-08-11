@@ -1,0 +1,44 @@
+[user]
+    email = ofeks10@gmail.com
+    name = ofeks10
+
+[core]
+    editor = nvim  # Change to whatever you want your default git editor to be
+    excludesfile = ~/.gitignore
+    quotepath = false
+
+[color]
+    status = auto
+    branch = auto
+    interactive = auto
+    diff = auto
+
+[pretty]
+    pretty-history = format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
+
+[alias]
+    co = checkout
+    b = branch
+    nb = checkout -b
+    st = status
+    quicklog = log --pretty=format:'%Cblue%h %Cred%cD %Creset%cn %Cgreen%s%Creset' --date-order --graph
+    changes = log --oneline --decorate
+    undo = reset --soft --keep HEAD^
+    unstage = reset HEAD
+    a = add
+    c = commit
+    ca = commit -a -m
+    cm = commit -m
+    p = pull
+    pr = pull --recurse-submodules
+    uncommit = reset HEAD~1
+    recommit = commit --amend --no-edit
+    editcommit = commit --amend
+    alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
+
+[push]
+    autoSetupRemote = true
+[credential]
+	helper = store
+[credential "https://vcs.ap.runi.ac.il"]
+	username = ofek.shiffman
