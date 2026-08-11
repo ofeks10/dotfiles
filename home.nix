@@ -39,9 +39,12 @@ in
   home.shellAliases = {
     # File listing & navigation
     ls = "eza --color=auto ";
-    ll = "eza -alF ";
+    # --classify needs an explicit `=value` (not bare `-F`) — eza's zsh
+    # completion script treats a bare -F/--classify as requiring the next
+    # word as its argument, which swallows folder-name tab-completion.
+    ll = "eza -al --classify=auto ";
     la = "eza -A";
-    l = "eza -CF";
+    l = "eza -C --classify=auto";
     ".." = "cd ..";
     cat = "bat ";
 
@@ -60,10 +63,15 @@ in
     vim = "nvim";
   };
 
-  # Zoxide integration (replaces your manual eval)
+  # Zoxide integration. enableZshIntegration is off on purpose: home-manager
+  # sources that eval before the p10k/fzf-tab plugins, so zoxide's precmd
+  # hook ends up ahead of theirs instead of last, which trips zoxide's own
+  # "detected a possible configuration issue" doctor check on every shell
+  # start. We eval it ourselves at the very end of initExtra instead, after
+  # everything else that registers a precmd hook.
   programs.zoxide = {
     enable = true;
-    enableZshIntegration = true;
+    enableZshIntegration = false;
     options = [ "--cmd cd" ];
   };
 
@@ -140,6 +148,11 @@ in
       zstyle ':completion:*' menu no
       zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -la $realpath'
       zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'eza -la $realpath'
+
+      # Must stay last: zoxide's precmd hook needs to be the last one
+      # registered, or it prints a "detected a possible configuration
+      # issue" warning on every shell start.
+      eval "$(zoxide init zsh --cmd cd)"
     '';
   };
   # Edit-in-place: the real file stays in my repo, ~/.config just points at it.
