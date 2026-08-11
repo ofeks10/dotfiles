@@ -150,10 +150,15 @@ in
   home.file.".claude/settings.json".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.claude/settings.json";
 
+  home.file.".gitconfig".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.gitconfig";
+  home.file.".p10k.zsh".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.p10k.zsh";
+  home.file.".fzf.zsh".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.fzf.zsh";
+
   home.file.".claude/CLAUDE.md".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/AGENTS.md";
   home.file.".codex/AGENTS.md".source =
-    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/AGENTS.md";
-  home.file.".config/opencode/AGENTS.md".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/AGENTS.md";
 }
