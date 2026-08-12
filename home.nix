@@ -63,6 +63,9 @@ in
     vim = "nvim";
 
     doup = "brew update && brew upgrade && brew autoremove && brew cleanup";
+
+    python = "python3";
+    pip = "pip3";
   };
 
   # Zoxide integration. enableZshIntegration is off on purpose: home-manager
