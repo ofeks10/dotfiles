@@ -20,5 +20,12 @@ return {
       { 'gd', function() Snacks.picker.lsp_definitions() end, desc = 'Goto Definition' },
     },
   },
+  {
+    'wsdjeg/hop.nvim',
+    version = "*",
+    opts = {
+        keys = 'etovxqpdygfblzhckisuran'
+    }
+  },
 }
 
