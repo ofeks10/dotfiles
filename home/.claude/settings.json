@@ -3,7 +3,11 @@
     "type": "command",
     "command": "jq -r '.model.display_name as $m | .context_window.total_input_tokens as $ctx | .rate_limits.five_hour.used_percentage as $five | .rate_limits.seven_day.used_percentage as $week | $m + (if $ctx then \" | Ctx: \\($ctx) tok\" else \"\" end) + (if $five then \" | 5h: \\($five|floor)%\" else \"\" end) + (if $week then \" | 7d: \\($week|floor)%\" else \"\" end)'"
   },
+  "enabledPlugins": {
+    "mattpocock-skills@claude-plugins-official": true
+  },
   "theme": "dark",
+  "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
-  "inputNeededNotifEnabled": true
+  "model": "opus"
 }
