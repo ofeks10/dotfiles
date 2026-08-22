@@ -21,6 +21,7 @@ in
     jq
     lazygit
     neovim
+    nodejs
     pnpm
     ripgrep
     zoxide
@@ -33,7 +34,14 @@ in
 # Global environment variables
   home.sessionVariables = {
     EDITOR = "nvim";
+
+    # `pnpm setup` can't run here: it self-installs into the read-only store.
+    PNPM_HOME = "${config.home.homeDirectory}/Library/pnpm";
   };
+
+  home.sessionPath = [
+    "${config.home.homeDirectory}/Library/pnpm/bin"
+  ];
 
   # Shell aliases (works across shells managed by Home Manager)
   home.shellAliases = {
