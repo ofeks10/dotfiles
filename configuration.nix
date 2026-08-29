@@ -41,6 +41,7 @@
       "raycast"
       "alt-tab"
       "claude-code"
+      "codex"
       "hiddenbar"
       "maccy"
       "rectangle"
