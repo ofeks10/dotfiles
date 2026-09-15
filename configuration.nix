@@ -40,7 +40,7 @@
     casks = [
       "raycast"
       "alt-tab"
-      "claude-code"
+      "claude-code@latest"
       "codex"
       "hiddenbar"
       "maccy"
