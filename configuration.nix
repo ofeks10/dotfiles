@@ -1,11 +1,11 @@
-{ user, ... }:
+{ user, hostPlatform, ... }:
 
 {
   # Determinate already manages the Nix daemon, so nix-darwin shouldn't.
   nix.enable = false;
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.hostPlatform = "aarch64-darwin"; # use x86_64-darwin for Intel CPU
+  nixpkgs.hostPlatform = hostPlatform;
 
   system.primaryUser = user;
   users.users.${user} = {
@@ -32,8 +32,8 @@
   homebrew = {
     enable = true;
     onActivation.cleanup = "zap";  # remove anything not listed here
-    onActivation.autoUpdate = true;
-    onActivation.extraFlags = [ "--force" ];
+    onActivation.autoUpdate = false;
+    onActivation.extraFlags = [ "--verbose" ];
     brews = [
       "herdr"
     ];
@@ -42,9 +42,11 @@
       "alt-tab"
       "claude-code@latest"
       "codex"
+      "docker-desktop"
       "hiddenbar"
       "maccy"
       "rectangle"
+      "visual-studio-code"
       "wezterm"
     ];
   };

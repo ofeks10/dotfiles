@@ -17,10 +17,11 @@
   outputs = inputs@{ self, nix-darwin, nix-homebrew, home-manager, nixpkgs }:
     let
       user = "ofeks10";
+      hostPlatform = "aarch64-darwin";
     in
     {
       darwinConfigurations."mac" = nix-darwin.lib.darwinSystem {
-        specialArgs = { inherit user; };
+        specialArgs = { inherit user hostPlatform; };
         modules = [
           ./configuration.nix
           nix-homebrew.darwinModules.nix-homebrew

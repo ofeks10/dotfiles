@@ -1,0 +1,28 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor and tool state
+*.swp
+*.swo
+*~
+.direnv/
+.idea/
+.vscode/
+
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+.npmrc
+
+# Build output
+dist/
+build/
+coverage/
+node_modules/
+
+# Nix
+result
+result-*

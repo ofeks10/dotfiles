@@ -14,8 +14,9 @@ shell config, and editor/tool dotfiles — all from this repo.
 - **`configuration.nix`** — system-level config: macOS defaults (dark mode,
   fast key repeat, list-view Finder, tap-to-click, etc.), and Homebrew
   (managed via `nix-homebrew`) for casks/brews that aren't in nixpkgs
-  (`wezterm`, `claude-code`, `rectangle`, `maccy`, `alt-tab`, `hiddenbar`,
-  `herdr`).
+  (`wezterm`, `claude-code`, Docker Desktop, VS Code, `rectangle`, `maccy`,
+  `alt-tab`, `hiddenbar`, `herdr`). Homebrew cleanup is intentionally set to
+  `zap`, so this list is the source of truth for managed Homebrew software.
 - **`home.nix`** — user-level config via Home Manager: CLI packages
   (`bat`, `eza`, `fzf`, `ripgrep`, `zoxide`, `lazygit`, `neovim`, `gh`,
   `docker`, `pnpm`, `jq`, `fd`, a Nerd Font), Zsh (powerlevel10k prompt,
@@ -26,8 +27,9 @@ shell config, and editor/tool dotfiles — all from this repo.
   no need to re-symlink):
   - `.config/wezterm/` — WezTerm terminal config
   - `.config/nvim/` — Neovim config (lazy.nvim)
-  - `.config/herdr/` — `herdr` terminal multiplexer config (installed via
-    Homebrew, see `configuration.nix`)
+  - `.config/herdr/config.toml` — `herdr` configuration (installed via
+    Homebrew, see `configuration.nix`). Herdr runtime state stays in
+    `~/.config/herdr` and is not managed by this repo.
   - `.config/AGENTS.md` — shared agent instructions, symlinked to both
     `~/.claude/CLAUDE.md` and `~/.codex/AGENTS.md`
   - `.claude/settings.json` — Claude Code settings (theme, status line)
@@ -55,16 +57,17 @@ cd ~/projects/dotfiles
 2. Symlinks this repo to `~/.dotfiles` — `home.nix` resolves its dotfile
    symlinks (wezterm, nvim, herdr, etc.) through that fixed path, so it has
    to exist before the first build.
-3. Runs the first `darwin-rebuild switch`, pinned to the `nix-darwin-26.05`
-   release (since `darwin-rebuild` doesn't exist yet on a fresh machine).
-   The system config it applies is still pinned by this repo's `flake.lock`.
+3. Runs the first `darwin-rebuild switch`, using the exact `nix-darwin`
+   revision pinned in this repo's `flake.lock` (since `darwin-rebuild` doesn't
+   exist yet on a fresh machine).
 
 If it fails with `nix: command not found` right after install, open a new
 terminal (so the daemon-installed `nix` is on `PATH`) and re-run
 `./bootstrap.sh`.
 
-After it finishes, everything below is set up: Homebrew + casks, CLI tools,
-Zsh with powerlevel10k, and all the symlinked dotfiles.
+After it finishes, everything below is set up: Homebrew + casks, Docker
+Desktop, VS Code, CLI tools, Zsh with powerlevel10k, and all the symlinked
+dotfiles.
 
 ## Day-to-day usage
 
@@ -81,8 +84,9 @@ Typical workflow:
 
 1. Edit files in this repo (`home.nix`, `configuration.nix`, or anything
    under `home/`).
-2. Run `./rebuild.sh`.
-3. Commit and push once you're happy with the change.
+2. Run `./check.sh` to validate syntax, managed paths, and the flake.
+3. Run `./rebuild.sh` to apply the change.
+4. Commit and push once you're happy with the change.
 
 Things you can add/change:
 - **CLI packages**: add to `home.packages` in `home.nix` (search
@@ -102,9 +106,17 @@ Things you can add/change:
 
 ### Intel Macs
 
-`configuration.nix` sets `nixpkgs.hostPlatform = "aarch64-darwin"` for
-Apple Silicon. On an Intel Mac, change that to `x86_64-darwin` before
-bootstrapping.
+`flake.nix` sets `hostPlatform = "aarch64-darwin"` for Apple Silicon. On an
+Intel Mac, change that to `x86_64-darwin` before bootstrapping.
+
+### Migrating an existing Herdr installation
+
+Older versions of this repo symlinked the entire `~/.config/herdr` directory
+into the repository. The current configuration manages only `config.toml`.
+`bootstrap.sh` and `rebuild.sh` automatically move that old managed link to
+`~/.config/herdr.dotfiles-backup` before activation and create a real runtime
+directory. Copy any desired runtime files from the backup afterward. Do not
+copy logs, session state, or release notes back into the repository.
 
 ### Updating pinned inputs
 
@@ -121,6 +133,8 @@ nix flake update
 ```
 .
 ├── bootstrap.sh        # one-time setup on a fresh Mac
+├── check.sh            # local syntax/path/flake validation
+├── migrate-herdr.sh    # one-time Herdr directory migration
 ├── rebuild.sh          # apply changes on every later run
 ├── flake.nix           # flake inputs + darwinConfigurations."mac"
 ├── flake.lock          # pinned input versions
@@ -134,6 +148,7 @@ nix flake update
     │   ├── herdr/
     │   └── wezterm/
     ├── .fzf.zsh
+    ├── .gitignore
     ├── .gitconfig
     └── .p10k.zsh
 ```

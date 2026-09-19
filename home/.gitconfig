@@ -39,6 +39,6 @@
 [push]
     autoSetupRemote = true
 [credential]
-	helper = store
+	helper = osxkeychain
 [credential "https://vcs.ap.runi.ac.il"]
 	username = ofek.shiffman

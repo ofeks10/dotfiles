@@ -24,6 +24,7 @@ in
     nodejs
     pnpm
     ripgrep
+    tmux
     zoxide
 
     # Fonts
@@ -177,8 +178,8 @@ in
     source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/nvim";
     force = true;
   };
-  home.file.".config/herdr" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/herdr";
+  home.file.".config/herdr/config.toml" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/herdr/config.toml";
     force = true;
   };
   home.file.".claude/settings.json" = {
@@ -199,12 +200,17 @@ in
     force = true;
   };
 
+  home.file.".gitignore" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.gitignore";
+    force = true;
+  };
+
   home.file.".claude/CLAUDE.md" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/AGENTS.md";
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/AGENTS.md";
     force = true;
   };
   home.file.".codex/AGENTS.md" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/AGENTS.md";
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/AGENTS.md";
     force = true;
   };
 }
