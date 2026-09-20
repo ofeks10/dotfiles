@@ -36,6 +36,7 @@
     onActivation.extraFlags = [ "--verbose" ];
     brews = [
       "herdr"
+      "uv"
     ];
     casks = [
       "raycast"
