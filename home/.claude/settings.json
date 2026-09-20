@@ -17,12 +17,12 @@
     }
   },
   "effortLevel": "high",
-  "theme": "dark",
-  "inputNeededNotifEnabled": true,
-  "agentPushNotifEnabled": true,
   "modelSettings": {
     "claude-opus-5": {
-      "effortLevel": "low"
+      "effortLevel": "high"
     }
-  }
+  },
+  "theme": "dark",
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true
 }
