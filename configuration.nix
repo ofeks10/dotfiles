@@ -36,6 +36,7 @@
     onActivation.extraFlags = [ "--verbose" ];
     brews = [
       "herdr"
+      "pi-coding-agent"
       "uv"
     ];
     casks = [

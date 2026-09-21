@@ -15,8 +15,8 @@ shell config, and editor/tool dotfiles — all from this repo.
   fast key repeat, list-view Finder, tap-to-click, etc.), and Homebrew
   (managed via `nix-homebrew`) for casks/brews that aren't in nixpkgs
   (`wezterm`, `claude-code`, Docker Desktop, VS Code, `rectangle`, `maccy`,
-  `alt-tab`, `hiddenbar`, `herdr`). Homebrew cleanup is intentionally set to
-  `zap`, so this list is the source of truth for managed Homebrew software.
+  `alt-tab`, `hiddenbar`, `herdr`, `pi-coding-agent`). Homebrew cleanup is
+  intentionally set to `zap`, so this list is the source of truth for managed Homebrew software.
 - **`home.nix`** — user-level config via Home Manager: CLI packages
   (`bat`, `eza`, `fzf`, `ripgrep`, `zoxide`, `lazygit`, `neovim`, `gh`,
   `docker`, `pnpm`, `jq`, `fd`, a Nerd Font), Zsh (powerlevel10k prompt,
@@ -30,9 +30,11 @@ shell config, and editor/tool dotfiles — all from this repo.
   - `.config/herdr/config.toml` — `herdr` configuration (installed via
     Homebrew, see `configuration.nix`). Herdr runtime state stays in
     `~/.config/herdr` and is not managed by this repo.
-  - `.config/AGENTS.md` — shared agent instructions, symlinked to both
-    `~/.claude/CLAUDE.md` and `~/.codex/AGENTS.md`
+  - `.config/AGENTS.md` — shared agent instructions, symlinked to
+    `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md` and `~/.pi/agent/AGENTS.md`
   - `.claude/settings.json` — Claude Code settings (theme, status line)
+  - `.pi/agent/` — Pi coding agent config (see [Pi](#pi-coding-agent) below):
+    `settings.json`, `models.json`, `themes/`, `extensions/`
   - `.gitconfig`, `.p10k.zsh`, `.fzf.zsh`
 
 ## Prerequisites
@@ -128,6 +130,65 @@ nix flake update
 ./rebuild.sh
 ```
 
+## Pi coding agent
+
+[Pi](https://pi.dev) is installed as the `pi-coding-agent` Homebrew formula
+(see `homebrew.brews` in `configuration.nix`), so `./rebuild.sh` puts `pi` on
+`PATH` on a fresh machine. Authenticate it yourself once with `pi` — this repo
+manages configuration only, never credentials.
+
+Pi mixes authored config and runtime state in the same `~/.pi/agent` directory,
+so `home.nix` links only the things this repo authors and leaves the rest of
+the directory alone:
+
+| Linked from `home/.pi/agent/` | What it is |
+| --- | --- |
+| `settings.json` | UI prefs (hidden thinking blocks, quiet startup, `rose-pine-moon` theme, `all` steering/follow-up modes, collapsed changelog) and the pinned package list |
+| `models.json` | `openai-codex` context-window overrides for the `gpt-5.6-*` models — no credentials, no default-model choice |
+| `themes/` | `rose-pine-moon.json` |
+| `extensions/` | local extensions, auto-loaded by Pi |
+| `AGENTS.md` | the shared `home/.config/AGENTS.md`, which Pi loads as global instructions — the same file `~/.claude/CLAUDE.md` and `~/.codex/AGENTS.md` point at |
+
+Sessions, trust decisions, caches, auth and Pi's downloaded `npm`/`git`
+package trees stay unmanaged in `~/.pi/agent`. Run `/reload` inside Pi after
+editing any of the linked files.
+
+Note that the `settings.json` link is write-through: Pi owns this file at
+runtime and rewrites it in place, so its edits land in this repo. In practice
+it maintains a `lastChangelogVersion` key and records the `defaultProvider` /
+`defaultModel` you pick at login, so the file shows up as modified in
+`git status` after a Pi upgrade or a provider change. That churn is expected —
+just commit it. Pi also drops the trailing newline when it rewrites the file.
+Credentials never land here: Pi keeps those in the unmanaged `~/.pi/agent/auth.json`.
+
+### Local extensions
+
+- **`calm/`** — `/calm` toggles a conversation-only presentation mode (off by
+  default). It hides collapsed thinking and the call/result shells for Pi's
+  seven built-in tools (`read`, `bash`, `edit`, `write`, `grep`, `find`, `ls`)
+  and swaps the working row for an animated boat widget. Presentation only:
+  prompts, tool execution, model context, session data and ordering are
+  untouched, and `/share` and `/export` still render the full stock transcript.
+  Its on/off choice is stored in `~/.pi/agent/calm`, outside this repo. Adapted
+  from Firstmate under the MIT license bundled in `extensions/calm/LICENSE`.
+- **`terminal-status-title.js`** — sets the terminal title to `π` plus the
+  session name (or the current directory), with a spinner while Pi is working.
+
+Both extensions and the theme are vendored from
+[kunchenguid/dotfiles](https://github.com/kunchenguid/dotfiles).
+
+### Pinned third-party packages
+
+`settings.json` declares two third-party Pi packages at exact, immutable
+versions, which Pi installs automatically at startup:
+
+- `npm:pi-web-access@0.14.0` — web access.
+- `npm:@ryan_nookpi/pi-extension-codex-fast-mode@0.2.6`.
+
+The pins mean Pi won't move them during package updates. Bumping either one is
+a deliberate edit to `home/.pi/agent/settings.json` — audit the new release
+first.
+
 ## Repo layout
 
 ```
@@ -147,6 +208,7 @@ nix flake update
     │   ├── nvim/
     │   ├── herdr/
     │   └── wezterm/
+    ├── .pi/agent/        # Pi: settings, models, theme, local extensions
     ├── .fzf.zsh
     ├── .gitignore
     ├── .gitconfig

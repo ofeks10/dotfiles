@@ -14,6 +14,9 @@ fi
 
 echo "==> checking structured config"
 jq empty home/.claude/settings.json
+jq empty home/.pi/agent/settings.json
+jq empty home/.pi/agent/models.json
+jq empty home/.pi/agent/themes/rose-pine-moon.json
 jq empty home/.config/nvim/lazy-lock.json
 jq empty flake.lock
 
@@ -24,6 +27,10 @@ for path in \
   home/.config/nvim \
   home/.config/wezterm \
   home/.claude/settings.json \
+  home/.pi/agent/settings.json \
+  home/.pi/agent/models.json \
+  home/.pi/agent/themes \
+  home/.pi/agent/extensions \
   home/.gitconfig \
   home/.gitignore \
   home/.p10k.zsh \

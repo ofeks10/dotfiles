@@ -187,6 +187,26 @@ in
     force = true;
   };
 
+  # Pi keeps credentials, sessions, trust decisions, caches and downloaded
+  # npm/git package trees under ~/.pi/agent too, so link only the files and
+  # directories this repo actually authors instead of the whole directory.
+  home.file.".pi/agent/settings.json" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.pi/agent/settings.json";
+    force = true;
+  };
+  home.file.".pi/agent/models.json" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.pi/agent/models.json";
+    force = true;
+  };
+  home.file.".pi/agent/themes" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.pi/agent/themes";
+    force = true;
+  };
+  home.file.".pi/agent/extensions" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.pi/agent/extensions";
+    force = true;
+  };
+
   home.file.".gitconfig" = {
     source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.gitconfig";
     force = true;
@@ -210,6 +230,10 @@ in
     force = true;
   };
   home.file.".codex/AGENTS.md" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/AGENTS.md";
+    force = true;
+  };
+  home.file.".pi/agent/AGENTS.md" = {
     source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/AGENTS.md";
     force = true;
   };
