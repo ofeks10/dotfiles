@@ -17,6 +17,7 @@ return {
       { '<leader>f', function() Snacks.picker.files() end, desc = 'Find Files' },
       { '<leader>s', function() Snacks.picker.grep() end,  desc = 'Search Text' },
       { '<leader>b', function() Snacks.picker.buffers() end, desc = 'Buffers' },
+      { '<leader>d', function() Snacks.picker.diagnostics() end, desc = 'Diagnostics' },
       { 'gd', function() Snacks.picker.lsp_definitions() end, desc = 'Goto Definition' },
     },
   },

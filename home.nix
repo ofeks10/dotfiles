@@ -27,6 +27,15 @@ in
     tmux
     zoxide
 
+    # Neovim: language servers (enabled in nvim/lua/plugins/lsp.lua) and the
+    # tree-sitter CLI that nvim-treesitter uses to compile parsers
+    basedpyright
+    lua-language-server
+    nixd
+    tree-sitter
+    typescript  # ts_ls needs a tsserver outside of projects that vendor one
+    typescript-language-server
+
     # Fonts
     anonymousPro  # VS Code editor font
     nerd-fonts.hack
