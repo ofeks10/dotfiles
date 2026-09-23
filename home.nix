@@ -95,6 +95,19 @@ in
     enableZshIntegration = true;
   };
 
+  # SSH: keep the key's passphrase in the macOS Keychain and load it into the
+  # agent on first use. UseKeychain only exists in Apple's /usr/bin/ssh, so
+  # IgnoreUnknown keeps a nix-provided ssh from choking on it.
+  programs.ssh = {
+    enable = true;
+    enableDefaultConfig = false;
+    settings."*" = {
+      AddKeysToAgent = "yes";
+      IgnoreUnknown = "UseKeychain";
+      UseKeychain = "yes";
+    };
+  };
+
   # Zsh Configuration
   programs.zsh = {
     enable = true;
