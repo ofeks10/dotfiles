@@ -1,4 +1,4 @@
-{ config, pkgs, user, ... }:
+{ config, pkgs, lib, user, ... }:
 
 let
   dotfiles = "${config.home.homeDirectory}/.dotfiles";
@@ -32,6 +32,10 @@ in
   ];
 
   fonts.fontconfig.enable = true;
+  # home-manager's `man home-configuration.nix` page is what triggers the
+  # "builtins.derivation ... options.json" warning on every rebuild. The same
+  # docs are online at https://nix-community.github.io/home-manager/options.xhtml
+  manual.manpages.enable = false;
 # Global environment variables
   home.sessionVariables = {
     EDITOR = "nvim";
@@ -81,7 +85,7 @@ in
   # sources that eval before the p10k/fzf-tab plugins, so zoxide's precmd
   # hook ends up ahead of theirs instead of last, which trips zoxide's own
   # "detected a possible configuration issue" doctor check on every shell
-  # start. We eval it ourselves at the very end of initExtra instead, after
+  # start. We eval it ourselves at the very end of initContent instead, after
   # everything else that registers a precmd hook.
   programs.zoxide = {
     enable = true;
@@ -141,46 +145,48 @@ in
       }
     ];
 
-    # Logic loaded near the very top of .zshrc
-    initExtraFirst = ''
-      # Powerlevel10k instant prompt
-      if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-        source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
-      fi
-    '';
+    initContent = lib.mkMerge [
+      # Logic loaded near the very top of .zshrc
+      (lib.mkBefore ''
+        # Powerlevel10k instant prompt
+        if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+          source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
+        fi
+      '')
 
-    # Custom functions, key bindings, and completion styling
-    initExtra = ''
-      # Cursor/VSCode theme fallback
-      if [[ "$TERM_PROGRAM" == "vscode" ]]; then
-        PROMPT='%n@%m:%~%# '
-        RPROMPT=""
-      else
-        [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
-      fi
+      # Custom functions, key bindings, and completion styling
+      ''
+        # Cursor/VSCode theme fallback
+        if [[ "$TERM_PROGRAM" == "vscode" ]]; then
+          PROMPT='%n@%m:%~%# '
+          RPROMPT=""
+        else
+          [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+        fi
 
-      # Key bindings
-      bindkey -e
-      bindkey '^p' history-search-backward
-      bindkey '^n' history-search-forward
+        # Key bindings
+        bindkey -e
+        bindkey '^p' history-search-backward
+        bindkey '^n' history-search-forward
 
-      # Custom functions
-      function mkcd() {
-        mkdir -p "$1" && cd "$1"
-      }
+        # Custom functions
+        function mkcd() {
+          mkdir -p "$1" && cd "$1"
+        }
 
-      # Completion styling & fzf-tab previews
-      zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-      zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
-      zstyle ':completion:*' menu no
-      zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -la $realpath'
-      zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'eza -la $realpath'
+        # Completion styling & fzf-tab previews
+        zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+        zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
+        zstyle ':completion:*' menu no
+        zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -la $realpath'
+        zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'eza -la $realpath'
 
-      # Must stay last: zoxide's precmd hook needs to be the last one
-      # registered, or it prints a "detected a possible configuration
-      # issue" warning on every shell start.
-      eval "$(zoxide init zsh --cmd cd)"
-    '';
+        # Must stay last: zoxide's precmd hook needs to be the last one
+        # registered, or it prints a "detected a possible configuration
+        # issue" warning on every shell start.
+        eval "$(zoxide init zsh --cmd cd)"
+      ''
+    ];
   };
   # Edit-in-place: the real file stays in my repo, ~/.config just points at it.
   home.file.".config/wezterm" = {
