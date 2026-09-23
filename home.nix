@@ -17,7 +17,6 @@ in
     eza
     fd
     fzf
-    gh
     jq
     lazygit
     neovim

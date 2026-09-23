@@ -38,6 +38,9 @@
     onActivation.autoUpdate = false;
     onActivation.extraFlags = [ "--verbose" ];
     brews = [
+      # Automic Vault's hardened gh; installed by `av harden gh`, declared here
+      # so the zap cleanup above doesn't uninstall it on every rebuild.
+      "automic-vault/isotopes/gh-cli"
       "herdr"
       "pi-coding-agent"
       "uv"
