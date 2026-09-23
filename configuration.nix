@@ -12,6 +12,9 @@
     home = "/Users/${user}";
   };
   system.stateVersion = 6;
+
+  # Touch ID for sudo (writes /etc/pam.d/sudo_local, which survives macOS updates).
+  security.pam.services.sudo_local.touchIdAuth = true;
   system.defaults = {
     NSGlobalDomain = {
       AppleInterfaceStyle = "Dark";
@@ -51,6 +54,7 @@
       "rectangle"
       "visual-studio-code"
       "wezterm"
+      "automic-vault/isotopes/automic-vault"
     ];
   };
 }
