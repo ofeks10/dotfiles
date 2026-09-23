@@ -28,6 +28,7 @@ in
     zoxide
 
     # Fonts
+    anonymousPro  # VS Code editor font
     nerd-fonts.hack
   ];
 
@@ -91,6 +92,29 @@ in
     enable = true;
     enableZshIntegration = false;
     options = [ "--cmd cd" ];
+  };
+
+  # VS Code: the app and its extensions come from nixpkgs, and the extensions
+  # dir is immutable, so anything not listed here gets dropped on rebuild.
+  # settings.json/keybindings.json are symlinked below (edit-in-place) rather
+  # than set via userSettings, so tweaking them from the UI still works.
+  programs.vscode = {
+    enable = true;
+    mutableExtensionsDir = false;
+    profiles.default.extensions = with pkgs.vscode-extensions; [
+      # Editing
+      vscodevim.vim
+
+      # Look & feel
+      nur.just-black
+      pkief.material-icon-theme
+
+      # Languages — add per-language packs here as needed, e.g.
+      # ms-python.python ms-python.vscode-pylance charliermarsh.ruff
+      # rust-lang.rust-analyzer dbaeumer.vscode-eslint esbenp.prettier-vscode
+      # Anything missing from nixpkgs can be pulled with
+      # pkgs.vscode-utils.extensionsFromVscodeMarketplace.
+    ];
   };
 
   # FZF integration
@@ -199,6 +223,14 @@ in
   };
   home.file.".config/herdr/config.toml" = {
     source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/herdr/config.toml";
+    force = true;
+  };
+  home.file."Library/Application Support/Code/User/settings.json" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/vscode/settings.json";
+    force = true;
+  };
+  home.file."Library/Application Support/Code/User/keybindings.json" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/vscode/keybindings.json";
     force = true;
   };
   home.file.".claude/settings.json" = {

@@ -52,7 +52,6 @@
       "maccy"
       "opensuperwhisper"
       "rectangle"
-      "visual-studio-code"
       "wezterm"
       "automic-vault/isotopes/automic-vault"
     ];

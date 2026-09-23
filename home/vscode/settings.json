@@ -1,0 +1,176 @@
+{
+  // Window settings
+  "window.zoomLevel": 1,
+  "window.title": "🦙 – ${activeEditorShort}${separator}${rootName} – 🦙",
+
+  // Workbench settings
+  "workbench.editor.enablePreviewFromQuickOpen": false,
+  "workbench.colorTheme": "Just Black",
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.startupEditor": "newUntitledFile",
+  "workbench.colorCustomizations": {
+    "tree.indentGuidesStroke": "#5c4f67",
+
+    "editorBracketPairGuide.background1": "#FFB86C",
+    "editorBracketPairGuide.background2": "#FF75B5",
+    "editorBracketPairGuide.background3": "#45A9F9",
+    "editorBracketPairGuide.background4": "#B084EB",
+    "editorBracketPairGuide.background5": "#E6E6E6",
+    "editorBracketPairGuide.background6": "#19f9d8",
+
+    "editorBracketPairGuide.activeBackground1": "#FFB86C",
+    "editorBracketPairGuide.activeBackground2": "#FF75B5",
+    "editorBracketPairGuide.activeBackground3": "#45A9F9",
+    "editorBracketPairGuide.activeBackground4": "#B084EB",
+    "editorBracketPairGuide.activeBackground5": "#E6E6E6",
+    "editorBracketPairGuide.activeBackground6": "#19f9d8",
+  },
+  "workbench.editor.labelFormat": "short",
+  "workbench.editor.wrapTabs": true,
+  "workbench.tree.indent": 20,
+
+  // Editor settings
+  "editor.formatOnPaste": false,
+  "editor.fontFamily": "Anonymous Pro",
+  "editor.fontLigatures": true,
+  "editor.tabSize": 4,
+  "editor.suggestSelection": "first",
+  "editor.fontSize": 18,
+  "editor.rulers": [
+    80,
+  ],
+  "editor.guides.bracketPairs" : true,
+  "editor.linkedEditing": true,
+  "editor.tokenColorCustomizations": {
+    "[Just Black]": {
+      "textMateRules": [
+        {
+          "scope": [
+            "comment",
+            "punctuation.definition.markdown"
+          ],
+          "settings": {
+              "foreground": "#5C5A72",
+              "fontStyle": ""
+          }
+        },
+        {
+          "scope": [
+            "comment.block",
+            "punctuation.definition.comment"
+          ],
+          "settings": {
+              "foreground": "#CF0000",
+              "fontStyle": ""
+          }
+        },
+        {
+          "scope": "string.quoted.docstring",
+          "settings": {
+              "foreground": "#5C5A72",
+              "fontStyle": "italic"
+          }
+        }
+      ],
+
+    }
+  },
+
+  // Terminal settings
+  "terminal.integrated.fontSize": 16,
+  // Nerd Font so the p10k prompt glyphs render (installed via home.packages).
+  "terminal.integrated.fontFamily": "'Hack Nerd Font Mono'",
+  "terminal.integrated.inheritEnv": false,
+  "terminal.integrated.copyOnSelection": true,
+
+  // File settings
+  "files.autoSave": "onFocusChange",
+  "files.trimTrailingWhitespace": true,
+  "files.exclude": {
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true,
+    "**/.history": true,
+    "**/.git": true,
+    "**/.cache": true,
+    "**/vendors": true,
+    "**/build": true,
+    "**/dist": false,
+    "**/coverage": true,
+    "**/*.pyc": true,
+    "**/false": true
+  },
+  "files.associations": {
+    ".md": "markdown",
+    ".mdx": "markdown",
+  },
+
+  // Search settings
+  "search.exclude": {
+    "**/.history": true,
+    "**/.git": true,
+    "**/.cache": true,
+    "**/vendors": true,
+    "**/build": true,
+    "**/dist": true,
+    "**/coverage": true,
+    "**/*.pyc": true,
+    "**/false": true,
+    "**/node_modules": false
+  },
+  "search.smartCase": true,
+
+  // Emmet settings
+  "emmet.triggerExpansionOnTab": true,
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact",
+    "vue-html": "html",
+    "python": "html",
+    "erb": "html",
+    "rhtml": "html",
+  },
+
+  // Explorer settings
+  "explorer.compactFolders": false,
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+
+  // Vim settings
+  "vim.useSystemClipboard": true,
+  "vim.handleKeys": {
+    "<C-w>": false,
+    "<C-n>": false,
+  },
+  "vim.easymotion": true,
+  "vim.surround": true,
+  "vim.leader": ",",
+  "vim.easymotionMarkerFontWeight": "bold",
+
+  // Git settings
+  "git.enableSmartCommit": true,
+  "git.openRepositoryInParentFolders": "always",
+
+  // Extensions are pinned by Nix (programs.vscode in home.nix), so don't
+  // nag about updates that can't be installed.
+  "extensions.autoUpdate": false,
+  "extensions.autoCheckUpdates": false,
+  "update.mode": "none",
+
+  // Security settings
+  "security.workspace.trust.untrustedFiles": "open",
+
+  // Web settings
+  "html.autoClosingTags": true,
+  "javascript.autoClosingTags": true,
+  "typescript.autoClosingTags": true,
+  "javascript.suggest.autoImports": true,
+  "typescript.suggest.autoImports": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+
+  // Markdown settings
+  "[markdown]": {
+    "files.trimTrailingWhitespace": false
+  }
+}

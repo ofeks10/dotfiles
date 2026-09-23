@@ -34,7 +34,9 @@ for path in \
   home/.gitconfig \
   home/.gitignore \
   home/.p10k.zsh \
-  home/.fzf.zsh
+  home/.fzf.zsh \
+  home/vscode/settings.json \
+  home/vscode/keybindings.json
 do
   if [[ ! -e "$path" ]]; then
     echo "error: missing managed source: $path" >&2
