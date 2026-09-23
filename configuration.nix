@@ -47,6 +47,7 @@
       "docker-desktop"
       "hiddenbar"
       "maccy"
+      "opensuperwhisper"
       "rectangle"
       "visual-studio-code"
       "wezterm"
