@@ -26,3 +26,5 @@ node_modules/
 # Nix
 result
 result-*
+
+**/.claude/settings.local.json

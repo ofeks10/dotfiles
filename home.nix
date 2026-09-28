@@ -19,6 +19,8 @@ in
     fzf
     jq
     lazygit
+    git
+    git-lfs
     neovim
     nodejs
     pnpm
