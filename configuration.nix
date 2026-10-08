@@ -4,6 +4,18 @@
   # Determinate already manages the Nix daemon, so nix-darwin shouldn't.
   nix.enable = false;
 
+  launchd.daemons.nix-gc = {
+    serviceConfig = {
+      ProgramArguments = [
+        "/nix/var/nix/profiles/default/bin/nix-collect-garbage"
+        "--delete-older-than" "14d"
+      ];
+      StartCalendarInterval = [ { Weekday = 0; Hour = 3; Minute = 0; } ];  # Sundays 03:00
+      StandardOutPath = "/var/log/nix-gc.log";
+      StandardErrorPath = "/var/log/nix-gc.log";
+    };
+  };
+
   nixpkgs.config.allowUnfree = true;
   nixpkgs.hostPlatform = hostPlatform;
 
@@ -46,6 +58,7 @@
       "uv"
     ];
     casks = [
+      "my-monkeys/tap/opensuperwhisper"
       "raycast"
       "alt-tab"
       "claude-code@latest"
@@ -53,7 +66,6 @@
       "docker-desktop"
       "hiddenbar"
       "maccy"
-      "opensuperwhisper"
       "rectangle"
       "wezterm"
       "automic-vault/isotopes/automic-vault"
