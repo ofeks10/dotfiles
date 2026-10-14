@@ -55,6 +55,7 @@
       "automic-vault/isotopes/gh-cli"
       "herdr"
       "pi-coding-agent"
+      "can1357/tap/omp"
       "uv"
     ];
     casks = [
